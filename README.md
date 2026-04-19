@@ -42,61 +42,88 @@
 ## 🏗️ Architecture — How Everything Connects
 
 ```
-  ╭─────────────────────────────────────────────────────────────────╮
-  │                                                                 │
-  │   👩‍💻  You write code and push to GitHub                        │
-  │                        │                                        │
-  │                        │ webhook fires instantly                │
-  │                        ▼                                        │
-  │   ┌─────────────────────────────────────────────────────────┐   │
-  │   │            ⚙️  Jenkins  ·  AWS EC2                      │   │
-  │   │                                                         │   │
-  │   │   Clone  ──▶  Build  ──▶  Push  ──▶  Scan  ──▶  Deploy │   │
-  │   │   0.85s       1s        5s       37s       3s           │   │
-  │   └─────────────────────────┬───────────────────────────────┘   │
-  │                             │                                   │
-  │                             ▼                                   │
-  │                   ┌──────────────────┐                          │
-  │                   │  📦  DockerHub   │                          │
-  │                   │  jhansi977/      │                          │
-  │                   │  edustream:v1    │                          │
-  │                   └────────┬─────────┘                          │
-  │                            │ image pull                         │
-  │                            ▼                                    │
-  │   ┌─────────────────────────────────────────────────────────┐   │
-  │   │           ☸️  Kubernetes  ·  AWS EC2                    │   │
-  │   │                                                         │   │
-  │   │   ┌──────────────┐      ┌──────────────────────────┐   │   │
-  │   │   │ Master Node  │      │      Worker Node          │   │   │
-  │   │   │              │      │                           │   │   │
-  │   │   │ API Server   │─────▶│  frontend     :30093      │   │   │
-  │   │   │ Scheduler    │      │  cartservice              │   │   │
-  │   │   │ etcd         │      │  redis-cart               │   │   │
-  │   │   │ Controller   │      │  checkoutservice          │   │   │
-  │   │   │ Calico CNI   │      │  paymentservice           │   │   │
-  │   │   │ Metrics Svr  │      │  shippingservice          │   │   │
-  │   │   └──────────────┘      │  emailservice             │   │   │
-  │   │                         │  productcatalog           │   │   │
-  │   │                         │  recommendation           │   │   │
-  │   │                         │  currencyservice          │   │   │
-  │   │                         │  adservice                │   │   │
-  │   │                         │  loadgenerator            │   │   │
-  │   │                         └──────────────────────────┘   │   │
-  │   └─────────────────────────────┬───────────────────────────┘   │
-  │                                 │ NodePort :30093               │
-  │                                 ▼                               │
-  │                          👥 User Browser                        │
-  │                                 │                               │
-  │                                 ▼                               │
-  │   ┌─────────────────────────────────────────────────────────┐   │
-  │   │          📊  Monitoring Stack                           │   │
-  │   │                                                         │   │
-  │   │  Metrics Server ─┐                                      │   │
-  │   │  Node Exporter  ─┼── 15s scrape ──▶ Prometheus ──▶ Grafana  │
-  │   │  Pod /metrics   ─┘    port 9090       port 3000         │   │
-  │   └─────────────────────────────────────────────────────────┘   │
-  │                                                                 │
-  ╰─────────────────────────────────────────────────────────────────╯
+                          ┌─────────────┐
+                          │  👩‍💻 Developer │
+                          │  git push   │
+                          └──────┬──────┘
+                                 │
+                                 │ webhook trigger
+                                 ▼
+                          ┌─────────────┐
+                          │   GitHub    │
+                          │    Repo     │
+                          └──────┬──────┘
+                                 │
+                    ┌────────────┘
+                    │
+                    ▼
+     ┌──────────────────────────────────────────────┐
+     │           ⚙️  Jenkins CI/CD  · AWS EC2        │
+     │                                              │
+     │  ┌─────────┐  ┌─────────┐  ┌─────────────┐  │
+     │  │ Clone   │─▶│ Docker  │─▶│   DockerHub  │  │
+     │  │  Repo   │  │  Build  │  │   jhansi977  │  │
+     │  │ 0.85s ✓ │  │  1s ✓  │  │    5s ✓      │  │
+     │  └─────────┘  └─────────┘  └──────┬───────┘  │
+     │                                   │          │
+     │  ┌─────────┐  ┌─────────────────┐ │          │
+     │  │ kubectl │◀─│   Trivy Scan    │◀┘          │
+     │  │  apply  │  │  HIGH+CRITICAL  │            │
+     │  │  3s ✓   │  │    37s ✓  0CVE │            │
+     │  └────┬────┘  └─────────────────┘            │
+     └───────┼──────────────────────────────────────┘
+             │
+             ▼
+┌────────────────────────────────────────────────────────────┐
+│                  ☸️  Kubernetes Cluster · AWS EC2            │
+│                                                            │
+│   ┌──────────────────────┐    ┌────────────────────────┐  │
+│   │    MASTER NODE       │    │     WORKER NODE        │  │
+│   │                      │    │                        │  │
+│   │  ┌────────────────┐  │    │  ┌──────────────────┐  │  │
+│   │  │  API Server    │  │    │  │    frontend      │  │  │
+│   │  └────────────────┘  │    │  │   NodePort:30093 │  │  │
+│   │  ┌────────────────┐  │    │  └──────────────────┘  │  │
+│   │  │   Scheduler    │  │───▶│  ┌──────────────────┐  │  │
+│   │  └────────────────┘  │    │  │   cartservice    │  │  │
+│   │  ┌────────────────┐  │    │  │   redis-cart     │  │  │
+│   │  │     etcd       │  │    │  └──────────────────┘  │  │
+│   │  └────────────────┘  │    │  ┌──────────────────┐  │  │
+│   │  ┌────────────────┐  │    │  │ checkoutservice  │  │  │
+│   │  │  Calico CNI    │  │    │  │ paymentservice   │  │  │
+│   │  └────────────────┘  │    │  │ shippingservice  │  │  │
+│   │  ┌────────────────┐  │    │  └──────────────────┘  │  │
+│   │  │ Metrics Server │  │    │  ┌──────────────────┐  │  │
+│   │  └────────────────┘  │    │  │  emailservice    │  │  │
+│   └──────────────────────┘    │  │  productcatalog  │  │  │
+│                               │  │  recommendation  │  │  │
+│                               │  │  currencyservice │  │  │
+│                               │  │  adservice       │  │  │
+│                               │  └──────────────────┘  │  │
+│                               └────────────────────────┘  │
+└────────────────────────────────────┬───────────────────────┘
+                                     │
+                                     │ NodePort :30093
+                                     ▼
+                              ┌─────────────┐
+                              │ 👥 Browser  │
+                              │    User     │
+                              └──────┬──────┘
+                                     │
+                                     ▼
+          ┌──────────────────────────────────────────────┐
+          │           📊  Monitoring Stack               │
+          │                                              │
+          │  ┌─────────────────┐    ┌─────────────────┐  │
+          │  │    Prometheus   │───▶│     Grafana     │  │
+          │  │   port : 9090   │    │   port : 3000   │  │
+          │  └────────┬────────┘    └─────────────────┘  │
+          │           │                                   │
+          │  ┌────────┴──────────────────────────────┐   │
+          │  │  Metrics Server · Node Exporter        │   │
+          │  │  Pod /metrics   · scrape every 15s     │   │
+          │  └───────────────────────────────────────┘   │
+          └──────────────────────────────────────────────┘
 ```
 
 ---
@@ -213,7 +240,6 @@ trivy image --exit-code 0 --severity HIGH,CRITICAL jhansi977/edustream:v1
 Grafana showed **"No Data"** — Metrics Server was misconfigured with wrong YAML args. Fixed:
 
 ```bash
-# Added these flags to metrics-server deployment
 --kubelet-insecure-tls
 --kubelet-preferred-address-types=InternalIP
 ```
