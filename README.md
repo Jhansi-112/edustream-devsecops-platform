@@ -14,9 +14,9 @@
 
 <br/>
 
-[![Portfolio](https://img.shields.io/badge/🎯%20View%20Live%20Portfolio-6366f1?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
+[![Portfolio](https://img.shields.io/badge/🎯%20VIEW%20LIVE%20PORTFOLIO-00b894?style=for-the-badge&labelColor=00b894)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
 &nbsp;&nbsp;
-[![Architecture](https://img.shields.io/badge/🏗️%20View%20Architecture%20Diagram-06b6d4?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
+[![Architecture](https://img.shields.io/badge/🏗️%20VIEW%20ARCHITECTURE%20DIAGRAM-e17055?style=for-the-badge&labelColor=e17055)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
 
 </div>
 
@@ -760,9 +760,9 @@ If you found this project helpful, please consider:
 
 <br/>
 
-[![Portfolio](https://img.shields.io/badge/🎯%20View%20Live%20Portfolio-6366f1?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
+[![Portfolio](https://img.shields.io/badge/🎯%20VIEW%20LIVE%20PORTFOLIO-00b894?style=for-the-badge&labelColor=00b894)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
 &nbsp;
-[![Architecture](https://img.shields.io/badge/🏗️%20View%20Architecture-06b6d4?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
+[![Architecture](https://img.shields.io/badge/🏗️%20VIEW%20ARCHITECTURE-e17055?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
 &nbsp;
 [![GitHub](https://img.shields.io/badge/GitHub-Jhansi--112-181717?style=for-the-badge&logo=github)](https://github.com/Jhansi-112)
 
