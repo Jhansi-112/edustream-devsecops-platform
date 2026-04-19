@@ -1,170 +1,388 @@
-<!-- <p align="center">
-<img src="/src/frontend/static/icons/Hipster_HeroLogoMaroon.svg" width="300" alt="Online Boutique" />
-</p> -->
-![Continuous Integration](https://github.com/GoogleCloudPlatform/microservices-demo/workflows/Continuous%20Integration%20-%20Main/Release/badge.svg)
+<div align="center">
 
-**Online Boutique** is a cloud-first microservices demo application.  The application is a
-web-based e-commerce app where users can browse items, add them to the cart, and purchase them.
+# 🚀 EduStream DevSecOps Platform
 
-Google uses this application to demonstrate how developers can modernize enterprise applications using Google Cloud products, including: [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine), [Cloud Service Mesh (CSM)](https://cloud.google.com/service-mesh), [gRPC](https://grpc.io/), [Cloud Operations](https://cloud.google.com/products/operations), [Spanner](https://cloud.google.com/spanner), [Memorystore](https://cloud.google.com/memorystore), [AlloyDB](https://cloud.google.com/alloydb), and [Gemini](https://ai.google.dev/). This application works on any Kubernetes cluster.
+### End-to-End CI/CD Pipeline · Kubernetes on AWS EC2 · Trivy Security · Prometheus · Grafana
 
-If you’re using this demo, please **★Star** this repository to show your interest!
+[![Jenkins](https://img.shields.io/badge/Jenkins-CI/CD-D24939?style=for-the-badge&logo=jenkins&logoColor=white)](https://www.jenkins.io/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.29-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
+[![Docker](https://img.shields.io/badge/DockerHub-jhansi977-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/)
+[![Trivy](https://img.shields.io/badge/Trivy-Security_Scan-1904DA?style=for-the-badge&logo=aqua&logoColor=white)](https://trivy.dev/)
+[![Prometheus](https://img.shields.io/badge/Prometheus-Monitoring-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)](https://prometheus.io/)
+[![Grafana](https://img.shields.io/badge/Grafana-Dashboards-F46800?style=for-the-badge&logo=grafana&logoColor=white)](https://grafana.com/)
+[![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
 
-**Note to Googlers:** Please fill out the form at [go/microservices-demo](http://go/microservices-demo).
+</div>
 
-## Architecture
+---
 
-**Online Boutique** is composed of 11 microservices written in different
-languages that talk to each other over gRPC.
+## 🌟 About This Project
 
-[![Architecture of
-microservices](/docs/img/architecture-diagram.png)](/docs/img/architecture-diagram.png)
+This is a **real-time, hands-on DevSecOps project** built completely from scratch on AWS EC2.
 
-Find **Protocol Buffers Descriptions** at the [`./protos` directory](/protos).
+A microservices-based e-commerce application is deployed on a manually provisioned Kubernetes cluster — automated end-to-end using Jenkins CI/CD, secured with Trivy image scanning, and monitored with Prometheus and Grafana.
 
-| Service                                              | Language      | Description                                                                                                                       |
-| ---------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| [frontend](/src/frontend)                           | Go            | Exposes an HTTP server to serve the website. Does not require signup/login and generates session IDs for all users automatically. |
-| [cartservice](/src/cartservice)                     | C#            | Stores the items in the user's shopping cart in Redis and retrieves it.                                                           |
-| [productcatalogservice](/src/productcatalogservice) | Go            | Provides the list of products from a JSON file and ability to search products and get individual products.                        |
-| [currencyservice](/src/currencyservice)             | Node.js       | Converts one money amount to another currency. Uses real values fetched from European Central Bank. It's the highest QPS service. |
-| [paymentservice](/src/paymentservice)               | Node.js       | Charges the given credit card info (mock) with the given amount and returns a transaction ID.                                     |
-| [shippingservice](/src/shippingservice)             | Go            | Gives shipping cost estimates based on the shopping cart. Ships items to the given address (mock)                                 |
-| [emailservice](/src/emailservice)                   | Python        | Sends users an order confirmation email (mock).                                                                                   |
-| [checkoutservice](/src/checkoutservice)             | Go            | Retrieves user cart, prepares order and orchestrates the payment, shipping and the email notification.                            |
-| [recommendationservice](/src/recommendationservice) | Python        | Recommends other products based on what's given in the cart.                                                                      |
-| [adservice](/src/adservice)                         | Java          | Provides text ads based on given context words.                                                                                   |
-| [loadgenerator](/src/loadgenerator)                 | Python/Locust | Continuously sends requests imitating realistic user shopping flows to the frontend.                                              |
+> 💬 *Every error in this project is real. Every fix is real. This is not a tutorial copy — this is built from scratch.*
 
-## Screenshots
+---
 
-| Home Page                                                                                                         | Checkout Screen                                                                                                    |
-| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| [![Screenshot of store homepage](/docs/img/online-boutique-frontend-1.png)](/docs/img/online-boutique-frontend-1.png) | [![Screenshot of checkout screen](/docs/img/online-boutique-frontend-2.png)](/docs/img/online-boutique-frontend-2.png) |
+## 🏗️ Architecture Overview
 
-## Quickstart (GKE)
+```
+Developer (git push)
+        │
+        ▼
+   GitHub Repo ──── webhook trigger
+        │
+        ▼
+┌─────────────────────────────────────────────┐
+│         Jenkins CI/CD — AWS EC2             │
+│  Build #16 · Total time: 51 sec · All ✔    │
+│                                             │
+│  Stage 1: Clone repo       ✓  0.85s        │
+│  Stage 2: docker build     ✓  1s           │
+│  Stage 3: docker push      ✓  5s           │
+│  Stage 4: Trivy Scan       ✓  37s          │
+│  Stage 5: kubectl apply    ✓  3s           │
+└───────────────────┬─────────────────────────┘
+                    │
+                    ▼
+         DockerHub Registry
+         jhansi977/edustream:v1
+                    │
+         ┌──────────┘ image pull
+         ▼
+┌─────────────────────────────────────────────┐
+│     Kubernetes Cluster — AWS EC2            │
+│                                             │
+│  ┌─────────────┐    ┌─────────────────────┐ │
+│  │ Master Node │    │    Worker Node      │ │
+│  │             │    │  (all pods here)    │ │
+│  │ API Server  │    │                     │ │
+│  │ Scheduler   │───▶│  frontend :30093    │ │
+│  │ etcd        │    │  cartservice        │ │
+│  │ Controller  │    │  checkoutservice    │ │
+│  │ Calico CNI  │    │  paymentservice     │ │
+│  │ Metrics Svr │    │  productcatalog     │ │
+│  └─────────────┘    │  shippingservice    │ │
+│                     │  emailservice       │ │
+│                     │  recommendation     │ │
+│                     │  currencyservice    │ │
+│                     │  adservice         │ │
+│                     │  redis-cart        │ │
+│                     └─────────────────────┘ │
+└───────────────────┬─────────────────────────┘
+                    │ NodePort :30093
+                    ▼
+             User Browser
+                    │
+                    ▼
+┌─────────────────────────────────────────────┐
+│         Monitoring Stack                    │
+│                                             │
+│  Metrics Server ──scrape 15s──▶ Prometheus  │
+│  Node Exporter  ──────────────▶ (port 9090) │
+│  Pod /metrics   ──────────────▶     │       │
+│                                     │PromQL │
+│                                     ▼       │
+│                               Grafana :3000 │
+│                          CPU · Memory · Pods│
+└─────────────────────────────────────────────┘
+```
 
-1. Ensure you have the following requirements:
-   - [Google Cloud project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project).
-   - Shell environment with `gcloud`, `git`, and `kubectl`.
+---
 
-2. Clone the latest major version.
+## 🛠️ Tools & Technologies
 
-   ```sh
-   git clone --depth 1 --branch v0 https://github.com/GoogleCloudPlatform/microservices-demo.git
-   cd microservices-demo/
-   ```
+| Category | Tool |
+|---|---|
+| Cloud Infrastructure | AWS EC2 (Ubuntu 22.04) |
+| Container Runtime | Docker + cri-dockerd |
+| Orchestration | Kubernetes v1.29 (kubeadm) |
+| Pod Networking | Calico CNI |
+| CI/CD | Jenkins 2.541 |
+| Image Registry | DockerHub (jhansi977/edustream:v1) |
+| Source Control | GitHub + Webhook trigger |
+| Security Scanning | Trivy (HIGH + CRITICAL severity) |
+| Monitoring | Prometheus (Helm install) |
+| Visualization | Grafana v12 |
+| Resource Metrics | Kubernetes Metrics Server |
 
-   The `--depth 1` argument skips downloading git history.
+---
 
-3. Set the Google Cloud project and region and ensure the Google Kubernetes Engine API is enabled.
+## ☁️ AWS Infrastructure — 3 EC2 Servers
 
-   ```sh
-   export PROJECT_ID=<PROJECT_ID>
-   export REGION=us-central1
-   gcloud services enable container.googleapis.com \
-     --project=${PROJECT_ID}
-   ```
+| Server | Purpose |
+|---|---|
+| `devops-server` | Jenkins + Docker + kubectl |
+| `k8s-master` | Kubernetes Control Plane |
+| `k8s-worker` | Runs all microservices (all pods) |
 
-   Substitute `<PROJECT_ID>` with the ID of your Google Cloud project.
+### AWS Security Group — Open Ports
 
-4. Create a GKE cluster and get the credentials for it.
+| Port | Service |
+|---|---|
+| 22 | SSH |
+| 80 | HTTP |
+| 8080 | Jenkins |
+| 6443 | Kubernetes API |
+| 3000 | Grafana |
+| 9090 | Prometheus |
+| 30000–32767 | Kubernetes NodePorts |
 
-   ```sh
-   gcloud container clusters create-auto online-boutique \
-     --project=${PROJECT_ID} --region=${REGION}
-   ```
+---
 
-   Creating the cluster may take a few minutes.
+## 📦 Microservices (13 Total — All on Worker Node)
 
-5. Deploy Online Boutique to the cluster.
+| Service | What it does | Type |
+|---|---|---|
+| **frontend** | User interface — exposed on NodePort :30093 | Frontend |
+| **redis-cart** | Session/cart data storage | Storage |
+| **cartservice** | Reads and writes to redis | Microservice |
+| **checkoutservice** | Handles payment + shipping flow | Microservice |
+| **paymentservice** | Processes transactions | Microservice |
+| **shippingservice** | Calculates shipping cost | Microservice |
+| **emailservice** | Sends order confirmation emails | Microservice |
+| **productcatalogservice** | Lists available products | Microservice |
+| **recommendationservice** | Suggests related products | Microservice |
+| **currencyservice** | FX / currency conversion | Microservice |
+| **adservice** | Shows contextual ads | Microservice |
+| **loadgenerator** | Simulates user traffic | Load Testing |
 
-   ```sh
-   kubectl apply -f ./release/kubernetes-manifests.yaml
-   ```
+---
 
-6. Wait for the pods to be ready.
+## 🔁 Jenkins CI/CD Pipeline (Jenkinsfile)
 
-   ```sh
-   kubectl get pods
-   ```
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Clone Code') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/Jhansi-112/edustream-devsecops-platform.git'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t jhansi977/edustream:v1 .'
+            }
+        }
+        stage('Push to DockerHub') {
+            steps {
+                sh 'docker push jhansi977/edustream:v1'
+            }
+        }
+        stage('Trivy Security Scan') {
+            steps {
+                sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL --format table jhansi977/edustream:v1'
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f release/kubernetes-manifests.yaml'
+            }
+        }
+    }
+}
+```
 
-   After a few minutes, you should see the Pods in a `Running` state:
+### Build Stats
+| What | Result |
+|---|---|
+| Total Build Time | 51 seconds |
+| Build Number | #16 |
+| Stage 1 — Clone | ✅ 0.85s |
+| Stage 2 — Docker Build | ✅ 1s |
+| Stage 3 — Docker Push | ✅ 5s |
+| Stage 4 — Trivy Scan | ✅ 37s |
+| Stage 5 — K8s Deploy | ✅ 3s |
 
-   ```
-   NAME                                     READY   STATUS    RESTARTS   AGE
-   adservice-76bdd69666-ckc5j               1/1     Running   0          2m58s
-   cartservice-66d497c6b7-dp5jr             1/1     Running   0          2m59s
-   checkoutservice-666c784bd6-4jd22         1/1     Running   0          3m1s
-   currencyservice-5d5d496984-4jmd7         1/1     Running   0          2m59s
-   emailservice-667457d9d6-75jcq            1/1     Running   0          3m2s
-   frontend-6b8d69b9fb-wjqdg                1/1     Running   0          3m1s
-   loadgenerator-665b5cd444-gwqdq           1/1     Running   0          3m
-   paymentservice-68596d6dd6-bf6bv          1/1     Running   0          3m
-   productcatalogservice-557d474574-888kr   1/1     Running   0          3m
-   recommendationservice-69c56b74d4-7z8r5   1/1     Running   0          3m1s
-   redis-cart-5f59546cdd-5jnqf              1/1     Running   0          2m58s
-   shippingservice-6ccc89f8fd-v686r         1/1     Running   0          2m58s
-   ```
+---
 
-7. Access the web frontend in a browser using the frontend's external IP.
+## 🔍 Trivy Security Scan Results
 
-   ```sh
-   kubectl get service frontend-external | awk '{print $4}'
-   ```
+Trivy scans the Docker image on every build for HIGH and CRITICAL CVEs.
 
-   Visit `http://EXTERNAL_IP` in a web browser to access your instance of Online Boutique.
+```bash
+trivy image --exit-code 0 --severity HIGH,CRITICAL \
+--format table jhansi977/edustream:v1
+```
 
-8. Congrats! You've deployed the default Online Boutique. To deploy a different variation of Online Boutique (e.g., with Google Cloud Operations tracing, Istio, etc.), see [Deploy Online Boutique variations with Kustomize](#deploy-online-boutique-variations-with-kustomize).
+| Target | Result |
+|---|---|
+| jhansi977/edustream:v1 (debian 13.4) | 17 vulnerabilities found |
+| node-pkg: currencyservice | ✅ 0 CVEs (clean) |
+| node-pkg: paymentservice | ✅ 0 CVEs (clean) |
 
-9. Once you are done with it, delete the GKE cluster.
+> ⚠️ `--exit-code 0` is used — pipeline **does not block** on vulnerabilities. Scan runs as a visibility/reporting step. Build #16 passed ✅
 
-   ```sh
-   gcloud container clusters delete online-boutique \
-     --project=${PROJECT_ID} --region=${REGION}
-   ```
+---
 
-   Deleting the cluster may take a few minutes.
+## 📊 Monitoring Stack
 
-## Additional deployment options
+### How It Works
+```
+Metrics Server  ─┐
+Node Exporter   ─┼──scrape every 15s──▶ Prometheus (port 9090)
+Pod /metrics    ─┘                              │
+                                           PromQL queries
+                                                │
+                                                ▼
+                                       Grafana (port 3000)
+                                   CPU · Memory · Pod dashboards
+```
 
-- **Terraform**: [See these instructions](/terraform) to learn how to deploy Online Boutique using [Terraform](https://www.terraform.io/intro).
-- **Istio / Cloud Service Mesh**: [See these instructions](/kustomize/components/service-mesh-istio/README.md) to deploy Online Boutique alongside an Istio-backed service mesh.
-- **Non-GKE clusters (Minikube, Kind, etc)**: See the [Development guide](/docs/development-guide.md) to learn how you can deploy Online Boutique on non-GKE clusters.
-- **AI assistant using Gemini**: [See these instructions](/kustomize/components/shopping-assistant/README.md) to deploy a Gemini-powered AI assistant that suggests products to purchase based on an image.
-- **And more**: The [`/kustomize` directory](/kustomize) contains instructions for customizing the deployment of Online Boutique with other variations.
+### Prometheus Targets — All UP ✅
+| Target | Status |
+|---|---|
+| Grafana | ✅ UP |
+| Alertmanager | ✅ UP |
+| Kubernetes API Server | ✅ UP |
+| CoreDNS | ✅ UP |
+| Node Exporter | ✅ UP |
 
-## Documentation
+### Live Node Metrics (kubectl top nodes)
+```
+NAME         CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+k8s-master   184m         9%     2169Mi          28%
+k8s-worker   426m         21%    2547Mi          33%
+```
 
-- [Development](/docs/development-guide.md) to learn how to run and develop this app locally.
+### Grafana Dashboards
+- 📊 CPU dashboard — node + pod usage
+- 📊 Memory dashboard — requests vs limits
+- 📊 Pod-level view — throttling + container details
+- 📊 Live metrics — Master 184m · Worker 426m
 
-## Demos featuring Online Boutique
+---
 
-- [Security hardening of the OnlineBoutique sample apps with the Docker Hardened Images (DHI)](https://medium.com/google-cloud/security-hardening-of-the-onlineboutique-sample-apps-with-docker-hardened-images-dhi-ca1fad348343)
-- [alpine, distroless or scratch?](https://medium.com/google-cloud/alpine-distroless-or-scratch-caac35250e0b)
-- [Platform Engineering in action: Deploy the Online Boutique sample apps with Score and Humanitec](https://medium.com/p/d99101001e69)
-- [The new Kubernetes Gateway API with Istio and Anthos Service Mesh (ASM)](https://medium.com/p/9d64c7009cd)
-- [Use Azure Redis Cache with the Online Boutique sample on AKS](https://medium.com/p/981bd98b53f8)
-- [Sail Sharp, 8 tips to optimize and secure your .NET containers for Kubernetes](https://medium.com/p/c68ba253844a)
-- [Deploy multi-region application with Anthos and Google cloud Spanner](https://medium.com/google-cloud/a2ea3493ed0)
-- [Use Google Cloud Memorystore (Redis) with the Online Boutique sample on GKE](https://medium.com/p/82f7879a900d)
-- [Use Helm to simplify the deployment of Online Boutique, with a Service Mesh, GitOps, and more!](https://medium.com/p/246119e46d53)
-- [How to reduce microservices complexity with Apigee and Anthos Service Mesh](https://cloud.google.com/blog/products/application-modernization/api-management-and-service-mesh-go-together)
-- [gRPC health probes with Kubernetes 1.24+](https://medium.com/p/b5bd26253a4c)
-- [Use Google Cloud Spanner with the Online Boutique sample](https://medium.com/p/f7248e077339)
-- [Seamlessly encrypt traffic from any apps in your Mesh to Memorystore (redis)](https://medium.com/google-cloud/64b71969318d)
-- [Strengthen your app's security with Cloud Service Mesh and Anthos Config Management](https://cloud.google.com/service-mesh/docs/strengthen-app-security)
-- [From edge to mesh: Exposing service mesh applications through GKE Ingress](https://cloud.google.com/architecture/exposing-service-mesh-apps-through-gke-ingress)
-- [Take the first step toward SRE with Cloud Operations Sandbox](https://cloud.google.com/blog/products/operations/on-the-road-to-sre-with-cloud-operations-sandbox)
-- [Deploying the Online Boutique sample application on Cloud Service Mesh](https://cloud.google.com/service-mesh/docs/onlineboutique-install-kpt)
-- [Anthos Service Mesh Workshop: Lab Guide](https://codelabs.developers.google.com/codelabs/anthos-service-mesh-workshop)
-- [KubeCon EU 2019 - Reinventing Networking: A Deep Dive into Istio's Multicluster Gateways - Steve Dake, Independent](https://youtu.be/-t2BfT59zJA?t=982)
-- Google Cloud Next'18 SF
-  - [Day 1 Keynote](https://youtu.be/vJ9OaAqfxo4?t=2416) showing GKE On-Prem
-  - [Day 3 Keynote](https://youtu.be/JQPOPV_VH5w?t=815) showing Stackdriver
-    APM (Tracing, Code Search, Profiler, Google Cloud Build)
-  - [Introduction to Service Management with Istio](https://www.youtube.com/watch?v=wCJrdKdD6UM&feature=youtu.be&t=586)
-- [Google Cloud Next'18 London – Keynote](https://youtu.be/nIq2pkNcfEI?t=3071)
-  showing Stackdriver Incident Response Management
-- [Microservices demo showcasing Go Micro](https://github.com/go-micro/demo)
-Webhook test
+## 🧠 Real Problems I Solved
+
+These are actual production-level issues I debugged and fixed:
+
+| Problem | Root Cause | Fix |
+|---|---|---|
+| `CRI runtime not running` | containerd misconfigured | Reinstalled with Docker repo + cri-dockerd |
+| Calico pods `0/1 Running` | BGP not established between nodes | Added All-Traffic inbound rule (same SG to same SG) |
+| DNS failure between microservices | Calico not ready → CoreDNS failing | Fixed networking + restarted CoreDNS |
+| Jenkins `permission denied` on Docker | Jenkins user not in Docker group | `sudo usermod -aG docker jenkins` |
+| Grafana showing `No Data` | Metrics Server not configured | Reinstalled + added `--kubelet-insecure-tls` flag |
+| `kubectl top` not working | Wrong args in metrics-server YAML | Fixed deployment args + restarted |
+
+---
+
+## 🚀 How to Practice This Project Yourself
+
+### Step 1 — Clone this repo
+```bash
+git clone https://github.com/Jhansi-112/edustream-devsecops-platform.git
+cd edustream-devsecops-platform
+```
+
+### Step 2 — Create 3 EC2 instances on AWS
+```
+devops-server → Ubuntu 22.04, 30GB
+k8s-master    → Ubuntu 22.04, 30GB
+k8s-worker    → Ubuntu 22.04, 30GB
+```
+
+### Step 3 — Install Docker on all servers
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y docker.io
+sudo systemctl enable docker && sudo systemctl start docker
+```
+
+### Step 4 — Install Kubernetes (Master + Worker)
+```bash
+sudo apt install -y apt-transport-https ca-certificates curl
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | \
+sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \
+https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | \
+sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt update
+sudo apt install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+```
+
+### Step 5 — Initialize Kubernetes Master
+```bash
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16 \
+--cri-socket=unix:///var/run/cri-dockerd.sock
+
+mkdir -p $HOME/.kube
+sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+### Step 6 — Install Calico Network
+```bash
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.27.2/manifests/calico.yaml
+```
+
+### Step 7 — Join Worker Node
+```bash
+sudo kubeadm join <MASTER-IP>:6443 \
+--token <token> \
+--discovery-token-ca-cert-hash sha256:<hash> \
+--cri-socket=unix:///var/run/cri-dockerd.sock
+```
+
+### Step 8 — Deploy All Microservices
+```bash
+kubectl apply -f release/kubernetes-manifests.yaml
+kubectl get pods
+kubectl get svc frontend-external
+```
+
+### Step 9 — Install Jenkins (DevOps Server)
+```bash
+sudo apt install openjdk-17-jdk -y
+curl -fsSL https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee \
+/usr/share/keyrings/jenkins-keyring.asc > /dev/null
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+https://pkg.jenkins.io/debian binary/ | sudo tee \
+/etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt update && sudo apt install jenkins -y
+sudo systemctl start jenkins
+```
+
+### Step 10 — Install Prometheus + Grafana
+```bash
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install monitoring prometheus-community/kube-prometheus-stack
+kubectl patch svc monitoring-grafana -p '{"spec": {"type": "NodePort"}}'
+kubectl patch svc monitoring-kube-prometheus-prometheus -p '{"spec": {"type": "NodePort"}}'
+```
+
+### Step 11 — Access Everything
+```
+Application  →  http://<WORKER-IP>:30093
+Jenkins      →  http://<DEVOPS-IP>:8080
+Prometheus   →  http://<MASTER-IP>:9090
+Grafana      →  http://<MASTER-IP>:3000
+```
+
+---
+
+## 🌐 Project Portfolio
+
+👉 Architecture Diagram → [edustream-devsecops-architecture-updated.html](./edustream-devsecops-architecture-updated.html)
+
+👉 Full Project Portfolio → [edustream-devops-portfolio.html](./edustream-devops-portfolio.html)
+
+---
+
+<div align="center">
+
+**Built from scratch by Jhansi 👩‍💻**
+
+**⭐ Star this repo if it helped you learn DevSecOps!**
+
+[![GitHub](https://img.shields.io/badge/GitHub-Jhansi--112-181717?style=for-the-badge&logo=github)](https://github.com/Jhansi-112)
+
+</div>
