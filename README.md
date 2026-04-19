@@ -1,28 +1,28 @@
 <div align="center">
 
-![header](https://capsule-render.vercel.app/api?type=waving&color=0:6366f1,100:06b6d4&height=200&section=header&text=EduStream%20DevSecOps%20Platform&fontSize=38&fontColor=ffffff&fontAlignY=38&desc=Production-Grade%20DevSecOps%20Pipeline%20on%20Kubernetes%20%7C%20AWS%20EC2%20%7C%20Jenkins%20%7C%20Docker%20%7C%20Trivy%20%7C%20Prometheus%20%7C%20Grafana&descSize=13&descAlignY=58&descColor=c7d2fe)
+![header](https://capsule-render.vercel.app/api?type=waving&color=0:27500A,100:72243E&height=200&section=header&text=EduStream%20DevSecOps%20Platform&fontSize=38&fontColor=ffffff&fontAlignY=38&desc=Production-Grade%20DevSecOps%20Pipeline%20on%20Kubernetes%20%7C%20AWS%20EC2%20%7C%20Jenkins%20%7C%20Docker%20%7C%20Trivy%20%7C%20Prometheus%20%7C%20Grafana&descSize=13&descAlignY=58&descColor=c7d2fe)
 
 <br/>
 
-[![Jenkins](https://img.shields.io/badge/Jenkins-6366f1?style=for-the-badge&logo=jenkins&logoColor=white)](https://www.jenkins.io/)
-[![Kubernetes](https://img.shields.io/badge/Kubernetes-06b6d4?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
-[![Docker](https://img.shields.io/badge/Docker-6366f1?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/)
-[![Trivy](https://img.shields.io/badge/Trivy-06b6d4?style=for-the-badge&logo=aqua&logoColor=white)](https://trivy.dev/)
-[![Prometheus](https://img.shields.io/badge/Prometheus-6366f1?style=for-the-badge&logo=prometheus&logoColor=white)](https://prometheus.io/)
-[![Grafana](https://img.shields.io/badge/Grafana-06b6d4?style=for-the-badge&logo=grafana&logoColor=white)](https://grafana.com/)
-[![AWS](https://img.shields.io/badge/AWS%20EC2-6366f1?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
+[![Jenkins](https://img.shields.io/badge/Jenkins-27500A?style=for-the-badge&logo=jenkins&logoColor=white)](https://www.jenkins.io/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-72243E?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
+[![Docker](https://img.shields.io/badge/Docker-27500A?style=for-the-badge&logo=docker&logoColor=white)](https://hub.docker.com/)
+[![Trivy](https://img.shields.io/badge/Trivy-72243E?style=for-the-badge&logo=aqua&logoColor=white)](https://trivy.dev/)
+[![Prometheus](https://img.shields.io/badge/Prometheus-27500A?style=for-the-badge&logo=prometheus&logoColor=white)](https://prometheus.io/)
+[![Grafana](https://img.shields.io/badge/Grafana-72243E?style=for-the-badge&logo=grafana&logoColor=white)](https://grafana.com/)
+[![AWS](https://img.shields.io/badge/AWS%20EC2-27500A?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
 
 <br/>
 
-[![Portfolio](https://img.shields.io/badge/🎯%20VIEW%20LIVE%20PORTFOLIO-00b894?style=for-the-badge&labelColor=00b894)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
+[![Portfolio](https://img.shields.io/badge/🎯%20VIEW%20LIVE%20PORTFOLIO-27500A?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
 &nbsp;&nbsp;
-[![Architecture](https://img.shields.io/badge/🏗️%20VIEW%20ARCHITECTURE%20DIAGRAM-e17055?style=for-the-badge&labelColor=e17055)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
+[![Architecture](https://img.shields.io/badge/🏗️%20VIEW%20ARCHITECTURE-72243E?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
 
 </div>
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 📋 Table of Contents
+## <span style="color:#27500A">📋 Table of Contents</span>
 
 - [Project Overview](#-project-overview)
 - [Architecture](#-architecture)
@@ -38,9 +38,9 @@
 - [Troubleshooting Guide](#-troubleshooting-guide)
 - [Contributing](#-contributing)
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 🌟 Project Overview
+## <span style="color:#72243E">🌟 Project Overview</span>
 
 ### Introduction
 
@@ -57,9 +57,9 @@ This project demonstrates the deployment of a **production-grade DevSecOps platf
 - **Real Debugging** — Real production errors faced and solved during this project
 - **18 Days Uptime** — 13 microservices running continuously without interruption
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 🏗️ Architecture
+## <span style="color:#27500A">🏗️ Architecture</span>
 
 ### Architecture Diagram
 
@@ -158,9 +158,9 @@ This project demonstrates the deployment of a **production-grade DevSecOps platf
 - Grafana — CPU, memory, pod dashboards
 - Metrics Server — enables kubectl top
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## ✅ Key Features
+## <span style="color:#72243E">✅ Key Features</span>
 
 | Feature | Details |
 |---|---|
@@ -171,9 +171,9 @@ This project demonstrates the deployment of a **production-grade DevSecOps platf
 | 13 Microservices | All pods running on worker node |
 | 18 Days Uptime | Continuous operation without interruption |
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 🔧 Pre-Requisites
+## <span style="color:#27500A">🔧 Pre-Requisites</span>
 
 ### Required Accounts
 
@@ -218,9 +218,9 @@ All Traffic      →  Same Security Group (for node-to-node communication)
 
 > ⚠️ **Important:** The "All Traffic from same SG" rule is critical. Without it, Calico BGP will not establish and pod DNS will fail.
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## ☁️ Infrastructure Setup
+## <span style="color:#72243E">☁️ Infrastructure Setup</span>
 
 ### Step 1 — Launch EC2 Instances
 
@@ -257,9 +257,9 @@ sudo systemctl start cri-docker
 sudo systemctl status cri-docker
 ```
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## ☸️ Kubernetes Cluster Setup
+## <span style="color:#27500A">☸️ Kubernetes Cluster Setup</span>
 
 ### Step 1 — Install Kubernetes Packages (Master + Worker)
 
@@ -339,9 +339,9 @@ kubectl get nodes
 # k8s-worker   Ready    <none>          v1.29.15
 ```
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 📦 Application Deployment
+## <span style="color:#72243E">📦 Application Deployment</span>
 
 ### Microservices Overview
 
@@ -386,9 +386,9 @@ kubectl get svc frontend-external
 http://<WORKER-PUBLIC-IP>:30093
 ```
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 🔁 Jenkins CI/CD Pipeline
+## <span style="color:#27500A">🔁 Jenkins CI/CD Pipeline</span>
 
 ### Step 1 — Install Jenkins (DevOps Server)
 
@@ -480,9 +480,9 @@ Total    Build #16        51s  SUCCESS
 4. Events: Just the push event
 5. Click **Add webhook**
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 🔒 Security Scanning with Trivy
+## <span style="color:#72243E">🔒 Security Scanning with Trivy</span>
 
 ### Install Trivy (DevOps Server)
 
@@ -517,9 +517,9 @@ trivy image --exit-code 0 \
 
 > **Note:** `--exit-code 0` means the pipeline continues even when vulnerabilities are found. The scan runs as a visibility and reporting step — results are logged in Jenkins for every build.
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 📊 Monitoring Setup
+## <span style="color:#27500A">📊 Monitoring Setup</span>
 
 ### Step 1 — Install Helm
 
@@ -601,9 +601,9 @@ kubectl top nodes
 | CoreDNS | ✅ UP |
 | Node Exporter | ✅ UP |
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 📈 Project Stats
+## <span style="color:#72243E">📈 Project Stats</span>
 
 | Metric | Value |
 |---|---|
@@ -616,9 +616,9 @@ kubectl top nodes
 | Cluster Uptime | 18 days |
 | CVEs Blocking Deploy | 0 |
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 🔧 Troubleshooting Guide
+## <span style="color:#27500A">🔧 Troubleshooting Guide</span>
 
 ### Common Issues and Solutions
 
@@ -699,9 +699,9 @@ sudo kubeadm join <MASTER-IP>:6443 \
   --cri-socket=unix:///var/run/cri-dockerd.sock
 ```
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 🤝 Contributing
+## <span style="color:#72243E">🤝 Contributing</span>
 
 ### How to Contribute
 
@@ -725,9 +725,9 @@ kubectl apply -f release/kubernetes-manifests.yaml
 kubectl get pods
 ```
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## 🛠️ Author & Community
+## <span style="color:#27500A">🛠️ Author & Community</span>
 
 This project is maintained by **Jhansi** 💡
 
@@ -738,9 +738,9 @@ Your feedback and contributions are welcome!
 - **GitHub:** [@Jhansi-112](https://github.com/Jhansi-112)
 - **Project Portfolio:** [View Live](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-## ⭐ Support the Project
+## <span style="color:#72243E">⭐ Support the Project</span>
 
 If you found this project helpful, please consider:
 
@@ -748,9 +748,9 @@ If you found this project helpful, please consider:
 - Sharing it with your network
 - Contributing to its improvement
 
----
+<hr style="border: 1.5px solid #27500A; border-radius: 2px;">
 
-![footer](https://capsule-render.vercel.app/api?type=waving&color=0:06b6d4,100:6366f1&height=120&section=footer)
+![footer](https://capsule-render.vercel.app/api?type=waving&color=0:72243E,100:27500A&height=120&section=footer)
 
 <div align="center">
 
@@ -760,9 +760,9 @@ If you found this project helpful, please consider:
 
 <br/>
 
-[![Portfolio](https://img.shields.io/badge/🎯%20VIEW%20LIVE%20PORTFOLIO-00b894?style=for-the-badge&labelColor=00b894)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
+[![Portfolio](https://img.shields.io/badge/🎯%20VIEW%20LIVE%20PORTFOLIO-27500A?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
 &nbsp;
-[![Architecture](https://img.shields.io/badge/🏗️%20VIEW%20ARCHITECTURE-e17055?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
+[![Architecture](https://img.shields.io/badge/🏗️%20VIEW%20ARCHITECTURE-72243E?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
 &nbsp;
 [![GitHub](https://img.shields.io/badge/GitHub-Jhansi--112-181717?style=for-the-badge&logo=github)](https://github.com/Jhansi-112)
 
