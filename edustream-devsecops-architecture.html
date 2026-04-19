@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduStream — DevSecOps Architecture</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0a0d14;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 40px 20px 60px;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      max-width: 900px;
+      margin: 0 auto 36px;
+    }
+    .page-header h1 {
+      font-size: 26px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
+    }
+    .page-header p {
+      font-size: 14px;
+      color: #8a95a3;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    .tag-purple { background: #1e1450; color: #a29bfe; border: 1px solid #6c5ce7; }
+    .tag-teal   { background: #052e24; color: #55efc4; border: 1px solid #00b894; }
+    .tag-blue   { background: #061e3a; color: #74b9ff; border: 1px solid #0984e3; }
+    .tag-orange { background: #2d1200; color: #fab1a0; border: 1px solid #e17055; }
+    .tag-red    { background: #2d0a0a; color: #ff7675; border: 1px solid #d63031; }
+
+    /* ── Main diagram card ── */
+    .diagram-card {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #0f1117;
+      border-radius: 18px;
+      padding: 28px 24px 32px;
+      border: 1px solid #1e2330;
+    }
+
+    .sec-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+    .sec-box {
+      border-radius: 14px;
+      padding: 18px 16px 20px;
+      margin-bottom: 20px;
+      border: 1px solid;
+    }
+    .sec-cicd { background: #1a1040; border-color: #6c5ce7; }
+    .sec-k8s  { background: #0a1f1a; border-color: #00b894; }
+    .sec-mon  { background: #1a120a; border-color: #e17055; }
+
+    .sec-label-cicd { color: #a29bfe; }
+    .sec-label-k8s  { color: #55efc4; }
+    .sec-label-mon  { color: #fab1a0; }
+
+    .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .arrow { color: #636e72; font-size: 18px; flex-shrink: 0; }
+    .arrow-down { text-align: center; color: #636e72; font-size: 13px; margin: 6px 0; }
+
+    .node {
+      border-radius: 10px;
+      padding: 8px 14px;
+      border: 1px solid;
+      text-align: center;
+      min-width: 100px;
+    }
+    .node-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .node-sub   { font-size: 11px; opacity: 0.8; }
+
+    .n-purple .node-title { color: #d6cdfe; } .n-purple .node-sub { color: #a29bfe; }
+    .n-teal   .node-title { color: #81ecec; } .n-teal   .node-sub { color: #55efc4; }
+    .n-blue   .node-title { color: #74b9ff; } .n-blue   .node-sub { color: #a0c4ff; }
+    .n-orange .node-title { color: #fab1a0; } .n-orange .node-sub { color: #ff9f7f; }
+    .n-coral  .node-title { color: #fdb9d0; } .n-coral  .node-sub { color: #fd79a8; }
+    .n-green  .node-title { color: #55efc4; } .n-green  .node-sub { color: #00cec9; }
+    .n-amber  .node-title { color: #ffeaa7; } .n-amber  .node-sub { color: #fdcb6e; }
+    .n-gray   .node-title { color: #b2bec3; } .n-gray   .node-sub { color: #747d8c; }
+
+    .n-purple { background: #2d1b69; border-color: #a29bfe; }
+    .n-teal   { background: #003d35; border-color: #00cec9; }
+    .n-blue   { background: #0a2a4a; border-color: #0984e3; }
+    .n-orange { background: #3d1a00; border-color: #e17055; }
+    .n-coral  { background: #3d1020; border-color: #fd79a8; }
+    .n-green  { background: #0d3320; border-color: #00b894; }
+    .n-amber  { background: #3d2a00; border-color: #fdcb6e; }
+    .n-gray   { background: #1e2330; border-color: #636e72; }
+    .n-red    { background: #2d0a0a; border-color: #d63031; }
+    .n-red .node-title { color: #ff7675; } .n-red .node-sub { color: #ff9f9f; }
+
+    .inner-box  { border-radius: 10px; padding: 12px; border: 1px dashed; margin-top: 10px; }
+    .inner-jenkins { background: #120d30; border-color: #6c5ce7; }
+    .inner-master  { background: #051510; border: 1px solid #00b894; border-radius: 10px; padding: 12px; }
+    .inner-worker  { background: #071a14; border: 1px solid #55efc4; border-radius: 10px; padding: 12px; flex: 1; }
+    .inner-sources { background: #1a0d00; border: 1px solid #e17055; border-radius: 10px; padding: 12px; }
+    .inner-grafana { background: #051a0d; border: 1px solid #00b894; border-radius: 10px; padding: 12px; flex: 1; }
+    .inner-prom    { background: #040f1f; border: 1px solid #0984e3; border-radius: 10px; padding: 12px; }
+
+    .inner-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .il-purple { color: #a29bfe; }
+    .il-teal   { color: #55efc4; }
+    .il-blue   { color: #74b9ff; }
+    .il-orange { color: #fab1a0; }
+    .il-green  { color: #55efc4; }
+
+    .cluster-row { display: flex; gap: 12px; align-items: flex-start; }
+
+    .badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; margin-top: 6px; font-weight: 600; }
+    .badge-purple { background: #2d1b69; color: #a29bfe; border: 1px solid #6c5ce7; }
+    .badge-teal   { background: #003d35; color: #55efc4; border: 1px solid #00cec9; }
+    .badge-orange { background: #3d1a00; color: #fab1a0; border: 1px solid #e17055; }
+
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+
+    .ports-bar {
+      background: #1a120a;
+      border: 1px solid #e17055;
+      border-radius: 10px;
+      padding: 10px 16px;
+      margin-top: 4px;
+    }
+    .ports-title { color: #fab1a0; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .ports-text  { color: #b2bec3; font-size: 11px; line-height: 1.6; }
+
+    /* ── Footer ── */
+    .page-footer {
+      max-width: 900px;
+      margin: 28px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: #636e72;
+    }
+    .page-footer a {
+      color: #74b9ff;
+      text-decoration: none;
+    }
+    .page-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .cluster-row { flex-direction: column; }
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .inner-master { min-width: unset !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>EduStream — DevSecOps Architecture</h1>
+    <p>End-to-end CI/CD pipeline, Kubernetes deployment, and observability stack on AWS EC2</p>
+    <div class="tag-row">
+      <span class="tag tag-purple">Jenkins CI/CD</span>
+      <span class="tag tag-teal">Kubernetes</span>
+      <span class="tag tag-blue">DockerHub</span>
+      <span class="tag tag-red">Trivy Security Scan</span>
+      <span class="tag tag-orange">Prometheus · Grafana</span>
+    </div>
+  </div>
+
+  <div class="diagram-card">
+
+    <!-- SECTION 1: CI/CD -->
+    <div class="sec-box sec-cicd">
+      <div class="sec-label sec-label-cicd">⬡ CI / CD Pipeline — GitHub → Jenkins EC2 → DockerHub → Trivy Scan → K8s</div>
+
+      <div class="row">
+        <div class="node n-purple">
+          <div class="node-title">Developer</div>
+          <div class="node-sub">git push</div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="node n-purple">
+          <div class="node-title">GitHub</div>
+          <div class="node-sub">webhook trigger</div>
+        </div>
+        <div class="arrow">↓</div>
+      </div>
+
+      <div class="inner-box inner-jenkins">
+        <div class="inner-label il-purple">Jenkins CI/CD — EC2 instance &nbsp;|&nbsp; Build #16 &nbsp;·&nbsp; 51 sec &nbsp;·&nbsp; All stages ✔</div>
+        <div class="row" style="flex-wrap:nowrap;gap:6px">
+          <div class="node n-teal" style="flex:1;min-width:0">
+            <div class="node-title">Stage 1</div>
+            <div class="node-sub">Clone repo<br><span style="font-size:10px;opacity:.7">0.85s</span></div>
+          </div>
+          <div class="arrow" style="font-size:14px">→</div>
+          <div class="node n-teal" style="flex:1;min-width:0">
+            <div class="node-title">Stage 2</div>
+            <div class="node-sub">docker build<br><span style="font-size:10px;opacity:.7">1s</span></div>
+          </div>
+          <div class="arrow" style="font-size:14px">→</div>
+          <div class="node n-teal" style="flex:1;min-width:0">
+            <div class="node-title">Stage 3</div>
+            <div class="node-sub">docker push<br><span style="font-size:10px;opacity:.7">5s</span></div>
+          </div>
+          <div class="arrow" style="font-size:14px">→</div>
+          <div class="node n-red" style="flex:1;min-width:0">
+            <div class="node-title">Stage 4</div>
+            <div class="node-sub">Trivy Scan<br><span style="font-size:10px;opacity:.7">37s</span></div>
+          </div>
+          <div class="arrow" style="font-size:14px">→</div>
+          <div class="node n-teal" style="flex:1;min-width:0">
+            <div class="node-title">Stage 5</div>
+            <div class="node-sub">kubectl apply<br><span style="font-size:10px;opacity:.7">3s</span></div>
+          </div>
+        </div>
+
+        <!-- Trivy detail box -->
+        <div style="margin-top:14px;background:#1a0808;border:1px dashed #d63031;border-radius:10px;padding:12px">
+          <div class="inner-label" style="color:#ff7675;margin-bottom:8px">🔍 Trivy Security Scan — Image Vulnerability Report</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start">
+            <div class="node n-red" style="flex:1;min-width:140px">
+              <div class="node-title">Command</div>
+              <div class="node-sub" style="font-size:10px;text-align:left;line-height:1.5">trivy image<br>--exit-code 0<br>--severity HIGH,CRITICAL<br>--format table<br>jhansi977/edustream:v1</div>
+            </div>
+            <div class="node n-red" style="flex:1;min-width:140px">
+              <div class="node-title">Target Scanned</div>
+              <div class="node-sub" style="font-size:10px;text-align:left;line-height:1.5">jhansi977/edustream:v1<br>(debian 13.4)<br>node-pkg: currencyservice<br>node-pkg: paymentservice</div>
+            </div>
+            <div class="node n-red" style="flex:1;min-width:140px">
+              <div class="node-title">Scan Results</div>
+              <div class="node-sub" style="font-size:10px;text-align:left;line-height:1.5">Debian: <b style="color:#ff7675">17 vulns</b><br>node-pkg: 0 (clean)<br>node-pkg: 0 (clean)<br>CVEs: HIGH + CRITICAL</div>
+            </div>
+            <div class="node n-red" style="flex:1;min-width:140px">
+              <div class="node-title">CVEs Detected</div>
+              <div class="node-sub" style="font-size:10px;text-align:left;line-height:1.5">CVE-2025-14104<br>util-linux heap overread<br>CVE-2026-3184<br>access control bypass<br>CVE-2026-27171 (zlib)</div>
+            </div>
+          </div>
+          <div style="margin-top:8px;background:#2d0a0a;border-radius:6px;padding:6px 10px">
+            <span style="color:#ff7675;font-size:10px;font-weight:700">NOTE: </span>
+            <span style="color:#b2bec3;font-size:10px">--exit-code 0 means pipeline continues even if vulnerabilities are found (non-blocking scan). Pipeline passed ✔ Build #16</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow-down" style="margin-top:10px">↓ docker push &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↓ image pull (kubectl)</div>
+      <div class="row" style="justify-content:center; margin-top:6px">
+        <div class="node n-blue" style="min-width:220px">
+          <div class="node-title">DockerHub Registry</div>
+          <div class="node-sub">jhansi977/edustream:v1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: KUBERNETES -->
+    <div class="sec-box sec-k8s">
+      <div class="sec-label sec-label-k8s">⬡ Kubernetes Cluster — AWS EC2 (Master + Worker)</div>
+
+      <div class="cluster-row">
+        <div class="inner-master" style="min-width:160px">
+          <div class="inner-label il-teal">Master node</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="node n-teal"><div class="node-title">API server</div><div class="node-sub">cluster entry</div></div>
+            <div class="node n-teal"><div class="node-title">Scheduler</div><div class="node-sub">assigns pods</div></div>
+            <div class="node n-teal"><div class="node-title">etcd</div><div class="node-sub">cluster state</div></div>
+            <div class="node n-teal"><div class="node-title">Controller mgr</div><div class="node-sub">desired state</div></div>
+            <div class="node n-teal"><div class="node-title">Calico CNI</div><div class="node-sub">pod networking</div></div>
+            <div class="node n-teal"><div class="node-title">Metrics server</div><div class="node-sub">kubectl top</div></div>
+          </div>
+        </div>
+
+        <div class="arrow" style="align-self:center">→</div>
+
+        <div class="inner-worker">
+          <div class="inner-label il-teal">Worker node — all pods running here</div>
+          <div style="margin-bottom:8px">
+            <span class="badge badge-purple">Frontend</span>
+            <span class="badge badge-teal">Storage</span>
+            <span class="badge badge-orange">Microservices</span>
+          </div>
+
+          <div class="grid-3">
+            <div class="node n-purple"><div class="node-title">Frontend pod</div><div class="node-sub">NodePort :30093</div></div>
+            <div class="node n-amber"><div class="node-title">redis-cart</div><div class="node-sub">session storage</div></div>
+            <div class="node n-orange"><div class="node-title">cartservice</div><div class="node-sub">reads/writes redis</div></div>
+          </div>
+
+          <div class="grid-3">
+            <div class="node n-orange"><div class="node-title">checkoutservice</div><div class="node-sub">payment + ship</div></div>
+            <div class="node n-orange"><div class="node-title">paymentservice</div><div class="node-sub">transactions</div></div>
+            <div class="node n-orange"><div class="node-title">shippingservice</div><div class="node-sub">calculates cost</div></div>
+          </div>
+
+          <div class="grid-3">
+            <div class="node n-coral"><div class="node-title">emailservice</div><div class="node-sub">order emails</div></div>
+            <div class="node n-coral"><div class="node-title">productcatalog</div><div class="node-sub">lists products</div></div>
+            <div class="node n-coral"><div class="node-title">recommendation</div><div class="node-sub">suggestions</div></div>
+          </div>
+
+          <div class="grid-3">
+            <div class="node n-blue"><div class="node-title">currencyservice</div><div class="node-sub">FX conversion</div></div>
+            <div class="node n-blue"><div class="node-title">adservice</div><div class="node-sub">contextual ads</div></div>
+            <div class="node n-gray"><div class="node-title">User browser</div><div class="node-sub">→ :30093</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: MONITORING -->
+    <div class="sec-box sec-mon">
+      <div class="sec-label sec-label-mon">⬡ Monitoring Stack — Prometheus + Grafana</div>
+
+      <div class="cluster-row" style="align-items:stretch;flex-wrap:wrap;gap:12px">
+        <div class="inner-sources" style="min-width:150px">
+          <div class="inner-label il-orange">Metrics sources</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="node n-orange"><div class="node-title">Metrics server</div><div class="node-sub">kubectl top nodes</div></div>
+            <div class="node n-orange"><div class="node-title">Node exporter</div><div class="node-sub">CPU, memory</div></div>
+            <div class="node n-orange"><div class="node-title">Pod /metrics</div><div class="node-sub">Go runtime</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 4px">
+          <div style="color:#fab1a0;font-size:11px;font-weight:700">scrape</div>
+          <div style="color:#fab1a0;font-size:11px">15s →</div>
+        </div>
+
+        <div class="inner-prom" style="min-width:148px">
+          <div class="inner-label il-blue">Prometheus</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="node n-blue"><div class="node-title">Helm install</div><div class="node-sub">scrape :15s</div></div>
+            <div class="node n-blue"><div class="node-title">Targets page</div><div class="node-sub">all targets UP</div></div>
+            <div class="node n-blue"><div class="node-title">Port 9090</div><div class="node-sub">NodePort exposed</div></div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:0 4px">
+          <div style="color:#74b9ff;font-size:11px;font-weight:700">PromQL</div>
+          <div style="color:#74b9ff;font-size:11px">→</div>
+        </div>
+
+        <div class="inner-grafana">
+          <div class="inner-label il-green">Grafana — port :3000</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="node n-green"><div class="node-title">CPU dashboard</div><div class="node-sub">node + pod usage</div></div>
+            <div class="node n-green"><div class="node-title">Memory dashboard</div><div class="node-sub">requests vs limits</div></div>
+            <div class="node n-green"><div class="node-title">Pod-level view</div><div class="node-sub">throttling / container</div></div>
+            <div class="node n-green"><div class="node-title">Live metrics</div><div class="node-sub">Master 184m · Worker 426m</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ports bar -->
+    <div class="ports-bar">
+      <div class="ports-title">AWS Security Group — open ports</div>
+      <div class="ports-text">22 (SSH) · 80 (HTTP) · 8080 (Jenkins) · 6443 (K8s API) · 30000–32767 (NodePorts) · 3000 (Grafana) · 9090 (Prometheus)</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span>EduStream DevSecOps Project</span>
+    <span>GitHub · Jenkins · Docker · Kubernetes · Prometheus · Grafana</span>
+  </div>
+
+</body>
+</html>
