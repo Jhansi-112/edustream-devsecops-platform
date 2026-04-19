@@ -12,6 +12,15 @@
 [![Grafana](https://img.shields.io/badge/Grafana-Dashboards-F46800?style=for-the-badge&logo=grafana&logoColor=white)](https://grafana.com/)
 [![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
 
+---
+
+## 🌐 Live Project Links — Click to View
+
+| | Link |
+|---|---|
+| 🎯 **Full Project Portfolio** | **[👉 Click Here to View Portfolio](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)** |
+| 🏗️ **Architecture Diagram** | **[👉 Click Here to View Architecture](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture-.html)** |
+
 </div>
 
 ---
@@ -50,26 +59,22 @@ Developer (git push)
          DockerHub Registry
          jhansi977/edustream:v1
                     │
-         ┌──────────┘ image pull
-         ▼
+                    ▼
 ┌─────────────────────────────────────────────┐
 │     Kubernetes Cluster — AWS EC2            │
 │                                             │
 │  ┌─────────────┐    ┌─────────────────────┐ │
 │  │ Master Node │    │    Worker Node      │ │
-│  │             │    │  (all pods here)    │ │
-│  │ API Server  │    │                     │ │
-│  │ Scheduler   │───▶│  frontend :30093    │ │
-│  │ etcd        │    │  cartservice        │ │
-│  │ Controller  │    │  checkoutservice    │ │
-│  │ Calico CNI  │    │  paymentservice     │ │
-│  │ Metrics Svr │    │  productcatalog     │ │
-│  └─────────────┘    │  shippingservice    │ │
-│                     │  emailservice       │ │
-│                     │  recommendation     │ │
+│  │ API Server  │    │  frontend :30093    │ │
+│  │ Scheduler   │───▶│  cartservice        │ │
+│  │ etcd        │    │  checkoutservice    │ │
+│  │ Controller  │    │  paymentservice     │ │
+│  │ Calico CNI  │    │  productcatalog     │ │
+│  │ Metrics Svr │    │  shippingservice    │ │
+│  └─────────────┘    │  emailservice       │ │
 │                     │  currencyservice    │ │
-│                     │  adservice         │ │
-│                     │  redis-cart        │ │
+│                     │  adservice          │ │
+│                     │  redis-cart         │ │
 │                     └─────────────────────┘ │
 └───────────────────┬─────────────────────────┘
                     │ NodePort :30093
@@ -78,15 +83,8 @@ Developer (git push)
                     │
                     ▼
 ┌─────────────────────────────────────────────┐
-│         Monitoring Stack                    │
-│                                             │
-│  Metrics Server ──scrape 15s──▶ Prometheus  │
-│  Node Exporter  ──────────────▶ (port 9090) │
-│  Pod /metrics   ──────────────▶     │       │
-│                                     │PromQL │
-│                                     ▼       │
-│                               Grafana :3000 │
-│                          CPU · Memory · Pods│
+│  Metrics Server ──▶ Prometheus ──▶ Grafana  │
+│        CPU · Memory · Pod Dashboards        │
 └─────────────────────────────────────────────┘
 ```
 
@@ -116,9 +114,9 @@ Developer (git push)
 |---|---|
 | `devops-server` | Jenkins + Docker + kubectl |
 | `k8s-master` | Kubernetes Control Plane |
-| `k8s-worker` | Runs all microservices (all pods) |
+| `k8s-worker` | Runs all microservices |
 
-### AWS Security Group — Open Ports
+### Security Group — Open Ports
 
 | Port | Service |
 |---|---|
@@ -132,26 +130,26 @@ Developer (git push)
 
 ---
 
-## 📦 Microservices (13 Total — All on Worker Node)
+## 📦 Microservices (13 Total)
 
-| Service | What it does | Type |
-|---|---|---|
-| **frontend** | User interface — exposed on NodePort :30093 | Frontend |
-| **redis-cart** | Session/cart data storage | Storage |
-| **cartservice** | Reads and writes to redis | Microservice |
-| **checkoutservice** | Handles payment + shipping flow | Microservice |
-| **paymentservice** | Processes transactions | Microservice |
-| **shippingservice** | Calculates shipping cost | Microservice |
-| **emailservice** | Sends order confirmation emails | Microservice |
-| **productcatalogservice** | Lists available products | Microservice |
-| **recommendationservice** | Suggests related products | Microservice |
-| **currencyservice** | FX / currency conversion | Microservice |
-| **adservice** | Shows contextual ads | Microservice |
-| **loadgenerator** | Simulates user traffic | Load Testing |
+| Service | What it does |
+|---|---|
+| **frontend** | User interface — NodePort :30093 |
+| **redis-cart** | Cart data storage |
+| **cartservice** | Reads/writes to redis |
+| **checkoutservice** | Handles payment + shipping |
+| **paymentservice** | Processes transactions |
+| **shippingservice** | Calculates shipping cost |
+| **emailservice** | Sends order emails |
+| **productcatalogservice** | Lists products |
+| **recommendationservice** | Suggests products |
+| **currencyservice** | FX conversion |
+| **adservice** | Contextual ads |
+| **loadgenerator** | Simulates user traffic |
 
 ---
 
-## 🔁 Jenkins CI/CD Pipeline (Jenkinsfile)
+## 🔁 Jenkins CI/CD Pipeline
 
 ```groovy
 pipeline {
@@ -187,53 +185,33 @@ pipeline {
 }
 ```
 
-### Build Stats
-| What | Result |
-|---|---|
-| Total Build Time | 51 seconds |
-| Build Number | #16 |
-| Stage 1 — Clone | ✅ 0.85s |
-| Stage 2 — Docker Build | ✅ 1s |
-| Stage 3 — Docker Push | ✅ 5s |
-| Stage 4 — Trivy Scan | ✅ 37s |
-| Stage 5 — K8s Deploy | ✅ 3s |
+| Stage | Time | Status |
+|---|---|---|
+| Clone Code | 0.85s | ✅ |
+| Docker Build | 1s | ✅ |
+| Docker Push | 5s | ✅ |
+| Trivy Scan | 37s | ✅ |
+| K8s Deploy | 3s | ✅ |
+| **Total** | **51s** | **✅ Build #16** |
 
 ---
 
-## 🔍 Trivy Security Scan Results
-
-Trivy scans the Docker image on every build for HIGH and CRITICAL CVEs.
-
-```bash
-trivy image --exit-code 0 --severity HIGH,CRITICAL \
---format table jhansi977/edustream:v1
-```
+## 🔍 Trivy Security Scan
 
 | Target | Result |
 |---|---|
 | jhansi977/edustream:v1 (debian 13.4) | 17 vulnerabilities found |
-| node-pkg: currencyservice | ✅ 0 CVEs (clean) |
-| node-pkg: paymentservice | ✅ 0 CVEs (clean) |
+| node-pkg: currencyservice | ✅ 0 CVEs |
+| node-pkg: paymentservice | ✅ 0 CVEs |
 
-> ⚠️ `--exit-code 0` is used — pipeline **does not block** on vulnerabilities. Scan runs as a visibility/reporting step. Build #16 passed ✅
+> `--exit-code 0` — pipeline does not block on vulnerabilities. Runs as reporting step only. ✅
 
 ---
 
-## 📊 Monitoring Stack
-
-### How It Works
-```
-Metrics Server  ─┐
-Node Exporter   ─┼──scrape every 15s──▶ Prometheus (port 9090)
-Pod /metrics    ─┘                              │
-                                           PromQL queries
-                                                │
-                                                ▼
-                                       Grafana (port 3000)
-                                   CPU · Memory · Pod dashboards
-```
+## 📊 Monitoring
 
 ### Prometheus Targets — All UP ✅
+
 | Target | Status |
 |---|---|
 | Grafana | ✅ UP |
@@ -242,37 +220,30 @@ Pod /metrics    ─┘                              │
 | CoreDNS | ✅ UP |
 | Node Exporter | ✅ UP |
 
-### Live Node Metrics (kubectl top nodes)
+### Live Node Metrics
+
 ```
 NAME         CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
 k8s-master   184m         9%     2169Mi          28%
 k8s-worker   426m         21%    2547Mi          33%
 ```
 
-### Grafana Dashboards
-- 📊 CPU dashboard — node + pod usage
-- 📊 Memory dashboard — requests vs limits
-- 📊 Pod-level view — throttling + container details
-- 📊 Live metrics — Master 184m · Worker 426m
-
 ---
 
 ## 🧠 Real Problems I Solved
 
-These are actual production-level issues I debugged and fixed:
-
 | Problem | Root Cause | Fix |
 |---|---|---|
 | `CRI runtime not running` | containerd misconfigured | Reinstalled with Docker repo + cri-dockerd |
-| Calico pods `0/1 Running` | BGP not established between nodes | Added All-Traffic inbound rule (same SG to same SG) |
-| DNS failure between microservices | Calico not ready → CoreDNS failing | Fixed networking + restarted CoreDNS |
-| Jenkins `permission denied` on Docker | Jenkins user not in Docker group | `sudo usermod -aG docker jenkins` |
-| Grafana showing `No Data` | Metrics Server not configured | Reinstalled + added `--kubelet-insecure-tls` flag |
-| `kubectl top` not working | Wrong args in metrics-server YAML | Fixed deployment args + restarted |
+| Calico pods `0/1 Running` | BGP not established | Added All-Traffic rule (same SG) |
+| DNS failure between services | Calico not ready | Fixed networking + restarted CoreDNS |
+| Jenkins `permission denied` | Jenkins not in Docker group | `sudo usermod -aG docker jenkins` |
+| Grafana `No Data` | Metrics Server missing | Reinstalled + `--kubelet-insecure-tls` |
+| `kubectl top` not working | Wrong metrics-server args | Fixed YAML args + restarted |
 
 ---
 
-## 🚀 How to Practice This Project Yourself
+## 🚀 How to Practice This Project
 
 ### Step 1 — Clone this repo
 ```bash
@@ -311,7 +282,6 @@ sudo apt-mark hold kubelet kubeadm kubectl
 ```bash
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16 \
 --cri-socket=unix:///var/run/cri-dockerd.sock
-
 mkdir -p $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -337,7 +307,7 @@ kubectl get pods
 kubectl get svc frontend-external
 ```
 
-### Step 9 — Install Jenkins (DevOps Server)
+### Step 9 — Install Jenkins
 ```bash
 sudo apt install openjdk-17-jdk -y
 curl -fsSL https://pkg.jenkins.io/debian/jenkins.io.key | sudo tee \
@@ -356,7 +326,6 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update
 helm install monitoring prometheus-community/kube-prometheus-stack
 kubectl patch svc monitoring-grafana -p '{"spec": {"type": "NodePort"}}'
-kubectl patch svc monitoring-kube-prometheus-prometheus -p '{"spec": {"type": "NodePort"}}'
 ```
 
 ### Step 11 — Access Everything
@@ -366,14 +335,6 @@ Jenkins      →  http://<DEVOPS-IP>:8080
 Prometheus   →  http://<MASTER-IP>:9090
 Grafana      →  http://<MASTER-IP>:3000
 ```
-
----
-
-## 🌐 Project Portfolio
-
-👉 Architecture Diagram → [edustream-devsecops-architecture-updated.html](./edustream-devsecops-architecture-updated.html)
-
-👉 Full Project Portfolio → [edustream-devops-portfolio.html](./edustream-devops-portfolio.html)
 
 ---
 
