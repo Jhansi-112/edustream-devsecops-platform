@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🚀 EduStream DevSecOps Platform
+![Header](https://capsule-render.vercel.app/api?type=waving&color=0:0ea5e9,50:6366f1,100:00ff88&height=200&section=header&text=EduStream%20DevSecOps%20Platform&fontSize=36&fontColor=ffffff&fontAlignY=38&desc=Built%20from%20Scratch%20%7C%20AWS%20EC2%20%7C%20Kubernetes%20%7C%20Jenkins%20%7C%20Docker%20%7C%20Trivy%20%7C%20Prometheus%20%7C%20Grafana&descAlignY=58&descSize=14)
+
+<br/>
 
 [![Jenkins](https://img.shields.io/badge/Jenkins-CI/CD-D24939?style=for-the-badge&logo=jenkins&logoColor=white)](https://www.jenkins.io/)
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.29-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
@@ -12,199 +14,328 @@
 
 <br/>
 
-**🌐 Live Project Links**
+---
 
-[![Portfolio](https://img.shields.io/badge/👉%20View%20Full%20Portfolio-0a0d14?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
+### 🌐 Live Project — Click to View
+
+[![Portfolio](https://img.shields.io/badge/🎯%20VIEW%20FULL%20PORTFOLIO-6366f1?style=for-the-badge&logoColor=white)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
 &nbsp;&nbsp;
-[![Architecture](https://img.shields.io/badge/👉%20View%20Architecture-0a0d14?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
+[![Architecture](https://img.shields.io/badge/🏗️%20VIEW%20ARCHITECTURE-0ea5e9?style=for-the-badge&logoColor=white)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
+
+---
 
 </div>
 
----
+<br/>
 
-## 📖 The Story — How This Project Was Born
+# 📊 PROJECT STATS AT A GLANCE
 
-It all started with a simple question:
+| 🖥️ EC2 Nodes | 📦 Microservices | ⚙️ Stages | 🔨 Builds | ⚡ Build Time | ☸️ K8s Resources | ⏱️ Uptime | 🔒 CVEs |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **3** | **13** | **5** | **16+** | **51 sec** | **35** | **18 days** | **0** |
 
-> *"Can I build a real DevSecOps platform — completely from scratch — without using any managed services?"*
-
-The answer became this project.
-
-I started with **3 blank AWS EC2 instances**, no pre-built cluster, no shortcuts. Just Ubuntu, terminal, and determination. What followed was a journey of building, breaking, debugging, and learning — exactly the way real DevOps engineers do it in production.
-
-This is not a tutorial follow-along. **Every command here was run by me. Every error was faced by me. Every fix was figured out by me.**
+<br/>
 
 ---
 
-## 🗺️ The Journey — Phase by Phase
+# 🌟 WHAT IS THIS PROJECT?
 
-### 🏁 Chapter 1 — Setting Up the Foundation
-*"Before anything runs, infrastructure must exist."*
+> 💬 *"Every error in this project is real. Every fix is real. This is not a tutorial copy — built completely from scratch on AWS EC2."*
 
-I created **3 EC2 instances on AWS** — one for Jenkins, one as Kubernetes Master, one as Worker. Configured security groups, opened the right ports, and SSHed into each machine. The project had begun.
+- ✅ Kubernetes cluster built **manually** using `kubeadm` — no EKS, no shortcuts
+- ✅ Every `git push` **automatically** triggers Jenkins → Docker → Trivy → Kubernetes
+- ✅ **Trivy security scanning** on every single build
+- ✅ **Real-time monitoring** — Prometheus scrapes every 15 seconds → Grafana dashboards
+- ✅ **18 days continuous uptime** — 13 microservices running without interruption
 
-```
-devops-server  →  Jenkins + Docker + kubectl
-k8s-master     →  Kubernetes Control Plane
-k8s-worker     →  Runs all 13 microservices
-```
+<br/>
 
 ---
 
-### ⚙️ Chapter 2 — Building the Kubernetes Cluster from Scratch
-*"No EKS. No shortcuts. Just kubeadm and patience."*
-
-I installed `kubeadm`, `kubelet`, and `kubectl` manually on both master and worker. Initialized the cluster, installed **Calico CNI** for pod networking, and joined the worker node.
-
-But it was not smooth. I hit a real error:
+# 🏗️ COMPLETE ARCHITECTURE FLOW
 
 ```
-[ERROR CRI]: container runtime is not running
-unknown service runtime.v1.RuntimeService
+╔══════════════════════════════════════════════════════════════════════╗
+║                    👩‍💻  DEVELOPER                                    ║
+║                        git push                                     ║
+╚══════════════════════════════╦═══════════════════════════════════════╝
+                               ║ webhook trigger
+                               ▼
+╔══════════════════════════════════════════════════════════════════════╗
+║          ⚙️  JENKINS CI/CD SERVER  ·  AWS EC2                       ║
+║                                                                     ║
+║  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐  ║
+║  │Stage  1 │→ │Stage  2 │→ │Stage  3 │→ │Stage  4 │→ │Stage  5 │  ║
+║  │  Clone  │  │ Docker  │  │Push to  │  │  Trivy  │  │ kubectl │  ║
+║  │  Repo   │  │  Build  │  │DockerHub│  │  Scan   │  │  apply  │  ║
+║  │ 0.85s ✓ │  │  1s ✓  │  │  5s ✓  │  │ 37s ✓  │  │  3s ✓  │  ║
+║  └─────────┘  └─────────┘  └─────────┘  └─────────┘  └─────────┘  ║
+╚══════════════════════════════╦═══════════════════════════════════════╝
+                               ║ docker push
+                               ▼
+                  ╔════════════════════════╗
+                  ║   📦  DockerHub        ║
+                  ║   jhansi977/           ║
+                  ║   edustream:v1         ║
+                  ╚════════════╦═══════════╝
+                               ║ image pull (kubectl apply)
+                               ▼
+╔══════════════════════════════════════════════════════════════════════╗
+║              ☸️  KUBERNETES CLUSTER  ·  AWS EC2                     ║
+║                                                                     ║
+║  ╔══════════════════════╗    ╔══════════════════════════════════╗   ║
+║  ║    MASTER NODE       ║    ║         WORKER NODE             ║   ║
+║  ║  ─────────────────   ║    ║  ──────────────────────────     ║   ║
+║  ║  API Server          ║    ║  🌐 frontend       :30093       ║   ║
+║  ║  Scheduler           ║───▶║  🛒 cartservice                 ║   ║
+║  ║  etcd                ║    ║  💾 redis-cart                  ║   ║
+║  ║  Controller Manager  ║    ║  💳 checkoutservice             ║   ║
+║  ║  Calico CNI          ║    ║  💰 paymentservice              ║   ║
+║  ║  Metrics Server      ║    ║  📦 shippingservice             ║   ║
+║  ╚══════════════════════╝    ║  📧 emailservice                ║   ║
+║                              ║  📋 productcatalogservice       ║   ║
+║                              ║  💡 recommendationservice       ║   ║
+║                              ║  💱 currencyservice             ║   ║
+║                              ║  📢 adservice                   ║   ║
+║                              ║  🔄 loadgenerator               ║   ║
+║                              ╚══════════════════════════════════╝   ║
+╚══════════════════════════════╦═══════════════════════════════════════╝
+                               ║ NodePort :30093
+                               ▼
+                        👥 USER BROWSER
+                               ║
+                               ▼
+╔══════════════════════════════════════════════════════════════════════╗
+║                  📊  MONITORING STACK                               ║
+║                                                                     ║
+║   Metrics Server ──┐                                                ║
+║   Node Exporter  ──┼── scrape 15s ──▶ Prometheus ──▶ Grafana       ║
+║   Pod /metrics   ──┘    port 9090        port 3000                  ║
+║                         CPU · Memory · Pod Health Dashboards        ║
+╚══════════════════════════════════════════════════════════════════════╝
 ```
 
-After hours of debugging, the fix was **reinstalling containerd via Docker repo and using cri-dockerd**. The cluster came alive.
+<br/>
+
+---
+
+# 🗺️ PROJECT PHASES
+
+## 🟣 PHASE 1 — AWS Infrastructure Setup
+
+> *"Before anything runs, infrastructure must exist."*
+
+Created **3 EC2 instances on AWS** — Jenkins server, Kubernetes Master, and Worker node. Configured all security groups and networking.
+
+```
+devops-server  →  Jenkins + Docker + kubectl  →  Ubuntu 22.04
+k8s-master     →  Kubernetes Control Plane    →  Ubuntu 22.04
+k8s-worker     →  Runs all 13 microservices   →  Ubuntu 22.04
+```
+
+**Ports configured:**
+
+| Port | Service |
+|---|---|
+| 22 | SSH |
+| 80 | HTTP |
+| 8080 | Jenkins UI |
+| 6443 | Kubernetes API |
+| 3000 | Grafana |
+| 9090 | Prometheus |
+| 30000–32767 | Kubernetes NodePorts |
+
+<br/>
+
+## 🔵 PHASE 2 — Kubernetes Cluster from Scratch
+
+> *"No EKS. No shortcuts. Just kubeadm and patience."*
+
+Installed `kubeadm`, `kubelet`, `kubectl` manually. Hit a real error:
+
+```
+❌ [ERROR CRI]: container runtime is not running
+   unknown service runtime.v1.RuntimeService
+```
+
+**Fix:** Reinstalled containerd via Docker repo + used cri-dockerd
 
 ```bash
+# After fix — cluster came alive ✅
 kubectl get nodes
-# NAME         STATUS   ROLES           AGE
-# k8s-master   Ready    control-plane   ✅
-# k8s-worker   Ready    <none>          ✅
+# NAME         STATUS   ROLES           VERSION
+# k8s-master   Ready    control-plane   v1.29.15
+# k8s-worker   Ready    <none>          v1.29.15
 ```
 
----
+<br/>
 
-### 📦 Chapter 3 — Deploying 13 Microservices
-*"One command. 13 services. 35 Kubernetes resources created."*
+## 🟢 PHASE 3 — Deploy 13 Microservices
 
-I deployed the full microservices application — frontend, cart, checkout, payment, shipping, email, recommendation, currency, ads, and redis — all running inside Kubernetes pods on the worker node.
+> *"One command. 13 services. 35 Kubernetes resources created."*
 
 ```bash
 kubectl apply -f release/kubernetes-manifests.yaml
-# deployment.apps/frontend created
-# deployment.apps/cartservice created
-# deployment.apps/paymentservice created
-# ... 35 resources total
+# ✅ frontend created
+# ✅ cartservice created
+# ✅ paymentservice created
+# ✅ checkoutservice created
+# ✅ ... 35 resources total
 ```
 
-Then another challenge — the app opened but showed a **500 DNS error**. Services could not talk to each other. The root cause? **Calico BGP was not established** between nodes because of a missing AWS Security Group rule. Fixed by allowing all traffic within the same security group.
+Hit DNS error — services could not talk to each other. Root cause: **Calico BGP not established** due to missing AWS Security Group rule. Fixed by allowing all traffic within same security group.
 
----
+<br/>
 
-### 🔁 Chapter 4 — Automating with Jenkins CI/CD
-*"No more manual deployments. Every push triggers everything."*
+## 🟡 PHASE 4 — Jenkins CI/CD Pipeline
 
-I installed Jenkins on the DevOps server, connected it to GitHub via webhook, and wrote a 5-stage pipeline:
+> *"No more manual deployments. Every push triggers everything."*
 
+**Pipeline flow:**
 ```
-git push → Jenkins triggered → Docker build → Push to DockerHub
-       → Trivy security scan → kubectl apply → Live on Kubernetes
+git push → webhook → Jenkins → Docker build → DockerHub → Trivy → Kubernetes
 ```
 
-But Jenkins could not access Docker. Error: `permission denied on /var/run/docker.sock`
+**Errors fixed during setup:**
 
-Fix: `sudo usermod -aG docker jenkins`
+| Error | Fix |
+|---|---|
+| Docker permission denied | `sudo usermod -aG docker jenkins` |
+| kubeconfig not found | Copied config to `/var/lib/jenkins/.kube/` |
+| File permission issues | `sudo chown -R jenkins:jenkins` |
 
-Then Jenkins could not find the project folder. Fix: copy kubeconfig to Jenkins home and set correct file permissions.
+**Final build result:**
+```
+✅ Stage 1  Clone Code      0.85s
+✅ Stage 2  Docker Build    1s
+✅ Stage 3  Docker Push     5s
+✅ Stage 4  Trivy Scan      37s
+✅ Stage 5  K8s Deploy      3s
+─────────────────────────────────
+   Build #16  ·  51s  ·  SUCCESS
+```
 
-After all fixes — the pipeline ran green. **Build #16. Total time: 51 seconds. All stages passed.**
+<br/>
 
----
+## 🔴 PHASE 5 — Trivy Security Scanning
 
-### 🔒 Chapter 5 — Security Scanning with Trivy
-*"Every image is scanned before it touches Kubernetes."*
-
-Integrated **Trivy** directly into the Jenkins pipeline. Every build scans the Docker image for HIGH and CRITICAL vulnerabilities before deploying.
+> *"Every image is scanned before it touches Kubernetes."*
 
 ```bash
-trivy image --exit-code 0 --severity HIGH,CRITICAL jhansi977/edustream:v1
+trivy image --exit-code 0 --severity HIGH,CRITICAL \
+  --format table jhansi977/edustream:v1
 ```
 
 | Target | Result |
 |---|---|
 | jhansi977/edustream:v1 (debian 13.4) | 17 found — non-blocking |
-| node-pkg: currencyservice | ✅ 0 CVEs |
-| node-pkg: paymentservice | ✅ 0 CVEs |
+| node-pkg: currencyservice | ✅ 0 CVEs — Clean |
+| node-pkg: paymentservice | ✅ 0 CVEs — Clean |
 
----
+> `--exit-code 0` — pipeline does not block. Scan runs as visibility step only ✅
 
-### 📊 Chapter 6 — Adding Eyes to the Cluster
-*"A cluster you cannot see is a cluster you cannot trust."*
+<br/>
 
-Installed **Prometheus** using Helm and connected **Grafana** for visualization. But Grafana showed **"No Data"** on all dashboards.
+## 🟠 PHASE 6 — Prometheus + Grafana Monitoring
 
-The problem? **Metrics Server was misconfigured.** Wrong arguments in the YAML caused `kubectl top` to fail completely.
+> *"A cluster you cannot see is a cluster you cannot trust."*
 
-Fixed by reinstalling metrics-server with the correct flags:
+Grafana showed **"No Data"** — Metrics Server was misconfigured.
+
+**Fix:**
 ```bash
+# Added these flags to metrics-server deployment
 --kubelet-insecure-tls
 --kubelet-preferred-address-types=InternalIP
 ```
 
-After the fix:
+**After fix — live metrics:**
 ```bash
 kubectl top nodes
-# k8s-master   184m   9%    2169Mi   28%
-# k8s-worker   426m   21%   2547Mi   33%
+# NAME         CPU    CPU%   MEMORY    MEMORY%
+# k8s-master   184m   9%     2169Mi    28%
+# k8s-worker   426m   21%    2547Mi    33%
 ```
 
-Grafana dashboards lit up. CPU graphs, memory usage, pod health — all live. **18 days of continuous uptime.**
+**Prometheus Targets — All UP ✅**
 
----
-
-### 🏆 Chapter 7 — The Result
-*"From 3 blank servers to a full DevSecOps platform."*
-
-| What | Result |
+| Target | Status |
 |---|---|
-| EC2 Nodes | 3 |
-| Microservices Running | 13 |
-| Pipeline Stages | 5 |
-| Builds Completed | 16+ |
-| Total Build Time | 51 seconds |
-| K8s Resources | 35 |
-| Cluster Uptime | 18 days |
-| CVEs Blocking Deploy | 0 |
+| Grafana | ✅ UP |
+| Alertmanager | ✅ UP |
+| Kubernetes API Server | ✅ UP |
+| CoreDNS | ✅ UP |
+| Node Exporter | ✅ UP |
+
+<br/>
+
+## 🏆 PHASE 7 — Final Result
+
+> *"From 3 blank servers to a full DevSecOps platform."*
+
+```
+╔══════════════════════════════════════════════╗
+║           FINAL PROJECT STATS               ║
+╠══════════════════╦═══════════════════════════╣
+║  EC2 Nodes       ║  3                        ║
+║  Microservices   ║  13                       ║
+║  Pipeline Stages ║  5                        ║
+║  Builds Run      ║  16+                      ║
+║  Build Time      ║  51 seconds               ║
+║  K8s Resources   ║  35                       ║
+║  Cluster Uptime  ║  18 days                  ║
+║  CVEs Blocking   ║  0                        ║
+╚══════════════════╩═══════════════════════════╝
+```
+
+<br/>
 
 ---
 
-## 🧠 Lessons Learned — Real Errors, Real Fixes
+# 🧠 REAL PROBLEMS I DEBUGGED & FIXED
 
-| What Broke | Why | How I Fixed It |
+| ❌ Problem | 🔍 Root Cause | ✅ Fix Applied |
 |---|---|---|
 | `CRI runtime not running` | containerd misconfigured | Reinstalled via Docker repo + cri-dockerd |
-| Calico `0/1 Running` | BGP not established | Added All-Traffic SG rule (same SG → same SG) |
-| Services DNS failing | Calico not ready | Fixed networking + restarted CoreDNS |
-| Jenkins Docker denied | Jenkins not in Docker group | `sudo usermod -aG docker jenkins` |
-| Grafana No Data | Metrics Server wrong config | Fixed args + `--kubelet-insecure-tls` |
-| kubectl top failing | Wrong metrics-server YAML | Fixed deployment args + restarted |
+| Calico pods `0/1 Running` | BGP not established | Added All-Traffic SG rule (same SG → same SG) |
+| DNS failure between services | Calico not ready → CoreDNS failing | Fixed networking + restarted CoreDNS pods |
+| Jenkins `permission denied` | Jenkins not in Docker group | `sudo usermod -aG docker jenkins` |
+| Grafana `No Data` | Metrics Server wrong config | Reinstalled + `--kubelet-insecure-tls` |
+| `kubectl top` not working | Wrong metrics-server YAML args | Fixed deployment args + restarted |
+
+<br/>
 
 ---
 
-## 🚀 Want to Build This Yourself?
-
-Clone the repo and follow the steps:
+# 🚀 PRACTICE THIS PROJECT YOURSELF
 
 ```bash
+# Step 1 — Clone this repo
 git clone https://github.com/Jhansi-112/edustream-devsecops-platform.git
 cd edustream-devsecops-platform
 ```
 
-Then follow the phases above — Chapter by Chapter. Every command is real and tested. You will face errors. That is part of the journey. 💪
+Follow the **7 phases above** — step by step. Every command is real and tested.
 
----
-
-<div align="center">
-
-*"The best way to learn DevOps is to break things and fix them."*
-
-**— Jhansi 👩‍💻**
+> 💡 *You will face errors. That is part of the journey. Fix them and you will learn more than any course can teach.*
 
 <br/>
 
-[![Portfolio](https://img.shields.io/badge/🎯%20View%20Live%20Portfolio-0a0d14?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
+---
+
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=0:00ff88,50:6366f1,100:0ea5e9&height=120&section=footer)
+
+<div align="center">
+
+**Built from scratch by Jhansi 👩‍💻**
+
+*Real project · Real errors · Real fixes · Real learning*
+
+<br/>
+
+[![Portfolio](https://img.shields.io/badge/🎯%20View%20Live%20Portfolio-6366f1?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html)
 &nbsp;
-[![Architecture](https://img.shields.io/badge/🏗️%20View%20Architecture-0a0d14?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
+[![Architecture](https://img.shields.io/badge/🏗️%20View%20Architecture-0ea5e9?style=for-the-badge)](https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html)
 &nbsp;
 [![GitHub](https://img.shields.io/badge/GitHub-Jhansi--112-181717?style=for-the-badge&logo=github)](https://github.com/Jhansi-112)
 
