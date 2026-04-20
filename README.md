@@ -18,27 +18,33 @@
 <tr>
 <td align="center">
 <a href="https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html">
-<div style="border:2px solid #27500A;border-radius:10px;overflow:hidden;display:inline-block;min-width:200px;">
-<div style="background:#27500A;padding:6px 20px;text-align:center;">
-<span style="color:#C0DD97;font-size:11px;font-weight:700;letter-spacing:2px;">✨ CLICK TO VIEW ✨</span>
-</div>
-<div style="padding:12px 20px;text-align:center;background:#f0faf0;">
-<span style="color:#27500A;font-size:15px;font-weight:800;">🚀 LIVE PORTFOLIO</span>
-</div>
-</div>
+<table style="border:2px solid #27500A;border-radius:10px;overflow:hidden;min-width:200px;border-collapse:collapse;">
+<tr><td align="center" style="background:#27500A;padding:8px 20px;">
+<b style="color:#C0DD97;font-size:11px;letter-spacing:2px;">✨ CLICK TO VIEW ✨</b>
+</td></tr>
+<tr><td align="center" style="background:#27500A;padding:14px 20px;">
+<b style="color:#ffffff;font-size:16px;">🚀 LIVE PORTFOLIO</b>
+</td></tr>
+<tr><td align="center" style="background:#C0DD97;padding:5px;">
+<b style="color:#27500A;font-size:11px;">→ VIEW NOW →</b>
+</td></tr>
+</table>
 </a>
 </td>
-<td width="30"></td>
+<td width="40"></td>
 <td align="center">
 <a href="https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html">
-<div style="border:2px solid #72243E;border-radius:10px;overflow:hidden;display:inline-block;min-width:200px;">
-<div style="background:#72243E;padding:6px 20px;text-align:center;">
-<span style="color:#F4C0D1;font-size:11px;font-weight:700;letter-spacing:2px;">✨ CLICK TO VIEW ✨</span>
-</div>
-<div style="padding:12px 20px;text-align:center;background:#fff0f5;">
-<span style="color:#72243E;font-size:15px;font-weight:800;">🏗️ ARCHITECTURE</span>
-</div>
-</div>
+<table style="border:2px solid #72243E;border-radius:10px;overflow:hidden;min-width:200px;border-collapse:collapse;">
+<tr><td align="center" style="background:#72243E;padding:8px 20px;">
+<b style="color:#F4C0D1;font-size:11px;letter-spacing:2px;">✨ CLICK TO VIEW ✨</b>
+</td></tr>
+<tr><td align="center" style="background:#72243E;padding:14px 20px;">
+<b style="color:#ffffff;font-size:16px;">🏗️ ARCHITECTURE</b>
+</td></tr>
+<tr><td align="center" style="background:#F4C0D1;padding:5px;">
+<b style="color:#72243E;font-size:11px;">→ VIEW NOW →</b>
+</td></tr>
+</table>
 </a>
 </td>
 </tr>
@@ -652,30 +658,36 @@ If you found this project helpful, please consider:
 <tr>
 <td align="center">
 <a href="https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devops-portfolio.html">
-<div style="border:2px solid #27500A;border-radius:10px;overflow:hidden;display:inline-block;min-width:180px;">
-<div style="background:#27500A;padding:5px 16px;text-align:center;">
-<span style="color:#C0DD97;font-size:10px;font-weight:700;letter-spacing:2px;">✨ CLICK TO VIEW ✨</span>
-</div>
-<div style="padding:10px 16px;text-align:center;background:#f0faf0;">
-<span style="color:#27500A;font-size:14px;font-weight:800;">🚀 LIVE PORTFOLIO</span>
-</div>
-</div>
+<table style="border:2px solid #27500A;border-radius:10px;overflow:hidden;min-width:180px;border-collapse:collapse;">
+<tr><td align="center" style="background:#27500A;padding:7px 16px;">
+<b style="color:#C0DD97;font-size:10px;letter-spacing:2px;">✨ CLICK TO VIEW ✨</b>
+</td></tr>
+<tr><td align="center" style="background:#27500A;padding:12px 16px;">
+<b style="color:#ffffff;font-size:15px;">🚀 LIVE PORTFOLIO</b>
+</td></tr>
+<tr><td align="center" style="background:#C0DD97;padding:5px;">
+<b style="color:#27500A;font-size:10px;">→ VIEW NOW →</b>
+</td></tr>
+</table>
 </a>
 </td>
-<td width="20"></td>
+<td width="30"></td>
 <td align="center">
 <a href="https://jhansi-112.github.io/edustream-devsecops-platform/edustream-devsecops-architecture.html">
-<div style="border:2px solid #72243E;border-radius:10px;overflow:hidden;display:inline-block;min-width:180px;">
-<div style="background:#72243E;padding:5px 16px;text-align:center;">
-<span style="color:#F4C0D1;font-size:10px;font-weight:700;letter-spacing:2px;">✨ CLICK TO VIEW ✨</span>
-</div>
-<div style="padding:10px 16px;text-align:center;background:#fff0f5;">
-<span style="color:#72243E;font-size:14px;font-weight:800;">🏗️ ARCHITECTURE</span>
-</div>
-</div>
+<table style="border:2px solid #72243E;border-radius:10px;overflow:hidden;min-width:180px;border-collapse:collapse;">
+<tr><td align="center" style="background:#72243E;padding:7px 16px;">
+<b style="color:#F4C0D1;font-size:10px;letter-spacing:2px;">✨ CLICK TO VIEW ✨</b>
+</td></tr>
+<tr><td align="center" style="background:#72243E;padding:12px 16px;">
+<b style="color:#ffffff;font-size:15px;">🏗️ ARCHITECTURE</b>
+</td></tr>
+<tr><td align="center" style="background:#F4C0D1;padding:5px;">
+<b style="color:#72243E;font-size:10px;">→ VIEW NOW →</b>
+</td></tr>
+</table>
 </a>
 </td>
-<td width="20"></td>
+<td width="30"></td>
 <td align="center">
 <a href="https://github.com/Jhansi-112">
 <img src="https://img.shields.io/badge/GitHub-Jhansi--112-181717?style=for-the-badge&logo=github"/>
